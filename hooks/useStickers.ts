@@ -12,7 +12,6 @@ export function useStickers() {
     const { data, error } = await supabase
       .from('stickers')
       .select('*')
-      .eq('obtained', false)
       .order('team')
       .order('number')
 
@@ -34,15 +33,9 @@ export function useStickers() {
         (payload) => {
           if (payload.eventType === 'UPDATE') {
             const updated = payload.new as Sticker
-            if (updated.obtained) {
-              setStickers((prev) => prev.filter((s) => s.id !== updated.id))
-            } else {
-              setStickers((prev) =>
-                prev.some((s) => s.id === updated.id)
-                  ? prev.map((s) => (s.id === updated.id ? updated : s))
-                  : [...prev, updated]
-              )
-            }
+            setStickers((prev) =>
+              prev.map((s) => (s.id === updated.id ? updated : s))
+            )
           }
         }
       )
@@ -70,7 +63,7 @@ export function useStickers() {
     return acc
   }, {})
 
-  const totalMissing = stickers.length
+  const totalMissing = stickers.filter((s) => !s.obtained).length
 
   return { stickers, missingByTeam, totalMissing, loading, markObtained }
 }

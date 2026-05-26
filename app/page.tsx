@@ -28,7 +28,7 @@ export default function HomePage() {
                 <TeamCard
                   key={code}
                   teamCode={code}
-                  missingCount={missingByTeam[code]?.length ?? 0}
+                  missingCount={missingByTeam[code]?.filter(s => !s.obtained).length ?? 0}
                 />
               ))}
             </div>
