@@ -1,5 +1,7 @@
 'use client'
 
+export const dynamic = 'force-dynamic'
+
 import { useStickers } from '@/hooks/useStickers'
 import { TeamCard } from '@/components/TeamCard'
 import { Header } from '@/components/Header'
