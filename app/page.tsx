@@ -65,32 +65,32 @@ export default function HomePage() {
           </div>
 
           {stickerResult && (
-            <div className={`mt-2 px-4 py-3 rounded-lg border text-sm flex items-center gap-3 ${
+            <div className={`mt-2 px-4 py-3 rounded-lg border-2 text-sm flex items-center gap-3 font-semibold ${
               !stickerResult.found
-                ? 'bg-[#2a1a0a] border-[#664422] text-[#cc8855]'
+                ? 'bg-[#E8600A] border-orange-400 text-white animate-pulse'
                 : stickerResult.sticker.obtained
-                ? 'bg-[#0a2a1a] border-green-700 text-green-400'
-                : 'bg-[#1a0a0a] border-red-800 text-red-400'
+                ? 'bg-[#E8600A] border-orange-400 text-white animate-pulse'
+                : 'bg-[#0a2a1a] border-green-500 text-green-300'
             }`}>
               {!stickerResult.found ? (
                 <>
-                  <span className="text-xl">❓</span>
+                  <span className="text-2xl">🎉</span>
                   <span>
-                    Cromo <strong>{stickerResult.team}-{stickerResult.number}</strong> no está en tu lista de faltantes
+                    <strong>{stickerResult.team}-{stickerResult.number}</strong> — ¡No está en tu lista! Ya lo tienes
                   </span>
                 </>
               ) : stickerResult.sticker.obtained ? (
                 <>
-                  <span className="text-xl">✅</span>
+                  <span className="text-2xl">🎉</span>
                   <span>
-                    <strong>{TEAM_FLAGS[stickerResult.sticker.team]} {TEAM_NAMES[stickerResult.sticker.team]} #{stickerResult.sticker.number}</strong> — ya lo tienes
+                    <strong>{TEAM_FLAGS[stickerResult.sticker.team]} {TEAM_NAMES[stickerResult.sticker.team]} #{stickerResult.sticker.number}</strong> — ¡Ya lo tienes!
                   </span>
                 </>
               ) : (
                 <>
-                  <span className="text-xl">❌</span>
+                  <span className="text-2xl">👀</span>
                   <span>
-                    <strong>{TEAM_FLAGS[stickerResult.sticker.team]} {TEAM_NAMES[stickerResult.sticker.team]} #{stickerResult.sticker.number}</strong> — aún te falta
+                    <strong>{TEAM_FLAGS[stickerResult.sticker.team]} {TEAM_NAMES[stickerResult.sticker.team]} #{stickerResult.sticker.number}</strong> — Te falta, ¡consíguelo!
                   </span>
                 </>
               )}
