@@ -1,13 +1,14 @@
 'use client'
 
 import { useEffect, useState, useCallback } from 'react'
-import { supabase, Sticker } from '@/lib/supabase'
+import { getSupabase, Sticker } from '@/lib/supabase'
 
 export function useStickers() {
   const [stickers, setStickers] = useState<Sticker[]>([])
   const [loading, setLoading] = useState(true)
 
   const fetchStickers = useCallback(async () => {
+    const supabase = getSupabase()
     const { data, error } = await supabase
       .from('stickers')
       .select('*')
@@ -22,6 +23,7 @@ export function useStickers() {
   }, [])
 
   useEffect(() => {
+    const supabase = getSupabase()
     fetchStickers()
 
     const channel = supabase
@@ -52,6 +54,7 @@ export function useStickers() {
   }, [fetchStickers])
 
   const markObtained = useCallback(async (id: string) => {
+    const supabase = getSupabase()
     await supabase
       .from('stickers')
       .update({
