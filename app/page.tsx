@@ -63,7 +63,7 @@ export default function HomePage() {
       <main className="max-w-5xl mx-auto px-4 py-6 space-y-5">
 
         {/* Search card */}
-        <div className="rounded-2xl border p-5 space-y-5 transition-colors"
+        <div className="max-w-2xl mx-auto rounded-2xl border p-5 space-y-5 transition-colors"
           style={{
             background: 'var(--bg2)',
             borderColor: 'var(--border)',
@@ -85,7 +85,7 @@ export default function HomePage() {
                   value={stickerQuery}
                   onChange={e => setStickerQuery(e.target.value)}
                   placeholder="URU 6"
-                  className="w-full rounded-xl px-4 py-3 text-sm border outline-none transition-all duration-200"
+                  className="w-full rounded-xl px-5 py-3.5 text-base border outline-none transition-all duration-200"
                   style={{
                     background: 'var(--bg3)',
                     borderColor: 'var(--border)',
@@ -212,7 +212,7 @@ export default function HomePage() {
                 value={teamSearch}
                 onChange={e => setTeamSearch(e.target.value)}
                 placeholder="México, ESP, Francia..."
-                className="flex-1 rounded-xl px-4 py-3 text-sm border outline-none transition-all duration-200"
+                className="flex-1 rounded-xl px-5 py-3.5 text-base border outline-none transition-all duration-200"
                 style={{
                   background: 'var(--bg3)',
                   borderColor: 'var(--border)',
