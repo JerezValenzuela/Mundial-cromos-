@@ -18,113 +18,109 @@ export default function TeamPage({ params }: Props) {
   const obtained = all.filter(s => s.obtained)
   const teamName = TEAM_NAMES[code] ?? code
   const teamFlag = TEAM_FLAGS[code] ?? '🏳️'
-  const pct = all.length > 0 ? (obtained.length / all.length) * 100 : 100
+  const pct = all.length > 0 ? Math.round((obtained.length / all.length) * 100) : 100
 
   return (
-    <div className="min-h-screen transition-colors" style={{ background: 'var(--bg)' }}>
-      <Header totalMissing={totalMissing} loading={loading} />
+    <div className="page-bg">
+      <div className="relative z-10 min-h-screen flex flex-col">
+        <Header totalMissing={totalMissing} loading={loading} />
 
-      <main className="max-w-5xl mx-auto px-4 py-6 space-y-5">
+        <main className="flex-1 w-full max-w-5xl mx-auto px-4 pt-4 pb-10 space-y-5">
 
-        <Link href="/"
-          className="inline-flex items-center gap-1.5 text-sm font-medium transition-all hover:opacity-70"
-          style={{ color: 'var(--text3)' }}>
-          ← Volver a equipos
-        </Link>
+          <Link href="/"
+            className="inline-flex items-center gap-2 text-sm font-medium transition-all hover:opacity-60"
+            style={{ color: 'var(--text3)' }}>
+            ← Volver
+          </Link>
 
-        {/* Team header card */}
-        <div className="rounded-2xl border p-5 flex flex-col sm:flex-row sm:items-center gap-5"
-          style={{ background: 'var(--bg2)', borderColor: 'var(--border)', boxShadow: 'var(--shadow)' }}>
-          <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-4xl shrink-0"
-            style={{ background: 'var(--bg3)', boxShadow: 'var(--shadow-sm)' }}>
-            {teamFlag}
-          </div>
-          <div className="flex-1 space-y-2">
-            <div>
-              <h2 className="text-xl font-black tracking-tight" style={{ color: 'var(--text)' }}>
-                {teamName}
-              </h2>
-              <p className="text-sm" style={{ color: 'var(--text2)' }}>
-                {loading ? 'Cargando...'
-                  : pending.length === 0 ? '🎉 ¡Colección completa!'
-                  : `${pending.length} pendientes · ${obtained.length} conseguidos`}
-              </p>
+          {/* Team hero card */}
+          <div
+            className="glass-strong rounded-3xl p-6 flex flex-col sm:flex-row sm:items-center gap-5"
+          >
+            <div
+              className="w-20 h-20 rounded-3xl flex items-center justify-center text-5xl shrink-0"
+              style={{
+                background: 'var(--glass)',
+                border: '1px solid var(--glass-border)',
+                boxShadow: '0 8px 24px rgba(0,0,0,0.2)',
+              }}
+            >
+              {teamFlag}
             </div>
-            <div className="space-y-1">
-              <div className="w-full h-2 rounded-full overflow-hidden" style={{ background: 'var(--border)' }}>
-                <div className="h-full rounded-full transition-all duration-700"
-                  style={{
-                    width: `${pct}%`,
-                    background: pct === 100
-                      ? 'linear-gradient(90deg, var(--green), #4ade80)'
-                      : 'linear-gradient(90deg, var(--accent), var(--accent2))',
-                    boxShadow: pct === 100
-                      ? '0 0 8px rgba(34,197,94,0.5)'
-                      : '0 0 8px rgba(249,115,22,0.4)',
-                  }} />
+            <div className="flex-1 space-y-3">
+              <div>
+                <h2 className="text-2xl font-black tracking-tight" style={{ color: 'var(--text)' }}>{teamName}</h2>
+                <p className="text-sm mt-0.5" style={{ color: 'var(--text2)' }}>
+                  {loading ? 'Cargando...'
+                    : pending.length === 0 ? '🎉 ¡Colección completa!'
+                    : `${pending.length} pendientes · ${obtained.length} conseguidos`}
+                </p>
               </div>
-              <p className="text-xs font-medium" style={{ color: 'var(--text3)' }}>
-                {Math.round(pct)}% completado
-              </p>
+              <div className="space-y-1.5">
+                <div className="w-full h-2 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.08)' }}>
+                  <div
+                    className="h-full rounded-full transition-all duration-700"
+                    style={{
+                      width: `${pct}%`,
+                      background: pct === 100
+                        ? 'linear-gradient(90deg, var(--green), #6ee7b7)'
+                        : 'linear-gradient(90deg, var(--accent), var(--gold))',
+                      boxShadow: pct === 100 ? '0 0 10px var(--greenglow)' : '0 0 10px var(--accentglow)',
+                    }}
+                  />
+                </div>
+                <p className="text-xs font-semibold" style={{ color: 'var(--text3)' }}>{pct}% completado</p>
+              </div>
             </div>
           </div>
-        </div>
 
-        {loading ? (
-          <div className="flex items-center justify-center py-24">
-            <div className="flex flex-col items-center gap-3">
-              <div className="w-8 h-8 rounded-full border-2 animate-spin"
+          {loading ? (
+            <div className="flex flex-col items-center justify-center py-24 gap-4">
+              <div className="w-10 h-10 rounded-full border-2 animate-spin"
                 style={{ borderColor: 'var(--accent)', borderTopColor: 'transparent' }} />
               <p className="text-sm" style={{ color: 'var(--text3)' }}>Cargando...</p>
             </div>
-          </div>
-        ) : all.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-24 gap-4">
-            <span className="text-6xl">🎉</span>
-            <p className="text-xl font-bold" style={{ color: 'var(--green)' }}>¡Todos conseguidos!</p>
-            <Link href="/" className="text-sm font-medium hover:opacity-70 transition-opacity"
-              style={{ color: 'var(--accent)' }}>
-              Ver otros equipos →
-            </Link>
-          </div>
-        ) : (
-          <div className="space-y-6">
-            {pending.length > 0 && (
-              <div className="rounded-2xl border p-4 space-y-3"
-                style={{ background: 'var(--bg2)', borderColor: 'var(--border)', boxShadow: 'var(--shadow-sm)' }}>
-                <div className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--accent)' }} />
-                  <p className="text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--text3)' }}>
-                    Pendientes — {pending.length}
-                  </p>
+          ) : all.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-24 gap-4">
+              <span className="text-6xl">🎉</span>
+              <p className="text-xl font-bold" style={{ color: 'var(--green)' }}>¡Todos conseguidos!</p>
+              <Link href="/" className="text-sm font-medium hover:opacity-70" style={{ color: 'var(--accent)' }}>
+                Ver otros equipos →
+              </Link>
+            </div>
+          ) : (
+            <div className="space-y-5">
+              {pending.length > 0 && (
+                <div className="glass rounded-3xl p-5 space-y-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--accent)' }} />
+                    <p className="text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--text3)' }}>
+                      Pendientes — {pending.length}
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 gap-2">
+                    {pending.map(s => <StickerCard key={s.id} sticker={s} onMark={markObtained} />)}
+                  </div>
                 </div>
-                <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 gap-2">
-                  {pending.map(s => (
-                    <StickerCard key={s.id} sticker={s} onMark={markObtained} />
-                  ))}
-                </div>
-              </div>
-            )}
+              )}
 
-            {obtained.length > 0 && (
-              <div className="rounded-2xl border p-4 space-y-3"
-                style={{ background: 'var(--bg2)', borderColor: 'var(--greenb)', boxShadow: 'var(--shadow-sm)' }}>
-                <div className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--green)' }} />
-                  <p className="text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--text3)' }}>
-                    Conseguidos — {obtained.length}
-                  </p>
+              {obtained.length > 0 && (
+                <div className="glass rounded-3xl p-5 space-y-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--green)' }} />
+                    <p className="text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--text3)' }}>
+                      Conseguidos — {obtained.length}
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 gap-2">
+                    {obtained.map(s => <StickerCard key={s.id} sticker={s} onMark={markObtained} />)}
+                  </div>
                 </div>
-                <div className="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 gap-2">
-                  {obtained.map(s => (
-                    <StickerCard key={s.id} sticker={s} onMark={markObtained} />
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-      </main>
+              )}
+            </div>
+          )}
+        </main>
+      </div>
     </div>
   )
 }

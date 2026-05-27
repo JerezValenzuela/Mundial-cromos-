@@ -16,39 +16,49 @@ export function StickerCard({ sticker, onMark }: Props) {
 
   if (sticker.obtained) {
     return (
-      <div className="flex flex-col items-center justify-center rounded-2xl p-2.5 gap-1 border-2 transition-all"
-        style={{ background: 'var(--greenbg)', borderColor: 'var(--greenb)' }}>
-        <span className="text-sm font-bold tabular-nums line-through" style={{ color: 'var(--green)', opacity: 0.7 }}>
+      <div
+        className="flex flex-col items-center justify-center rounded-2xl p-2.5 gap-1.5"
+        style={{
+          background: 'var(--greenglass)',
+          border: '1px solid var(--greenborder)',
+          boxShadow: '0 2px 12px var(--greenglow)',
+        }}
+      >
+        <span className="text-sm font-bold line-through" style={{ color: 'var(--green)', opacity: 0.6 }}>
           {sticker.number}
         </span>
-        <div className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white"
-          style={{ background: 'var(--green)', boxShadow: '0 2px 8px rgba(34,197,94,0.4)' }}>
-          ✓
-        </div>
+        <div
+          className="w-6 h-6 rounded-full flex items-center justify-center text-xs text-white font-bold"
+          style={{ background: 'var(--green)', boxShadow: '0 0 10px var(--greenglow)' }}
+        >✓</div>
       </div>
     )
   }
 
   return (
     <div
-      className="flex flex-col items-center justify-center rounded-2xl p-2.5 gap-1 border transition-all duration-200 cursor-pointer"
-      style={{ background: 'var(--bg2)', borderColor: 'var(--border)' }}
+      className="flex flex-col items-center justify-center rounded-2xl p-2.5 gap-1.5 cursor-pointer transition-all duration-200"
+      style={{
+        background: 'var(--glass)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+        border: '1px solid var(--glass-border)',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+      }}
       onMouseEnter={e => {
         const el = e.currentTarget as HTMLDivElement
-        el.style.borderColor = 'var(--accent)'
-        el.style.boxShadow = '0 4px 16px rgba(249,115,22,0.2)'
-        el.style.transform = 'scale(1.05)'
+        el.style.transform = 'scale(1.08)'
+        el.style.borderColor = 'rgba(255,107,26,0.5)'
+        el.style.boxShadow = '0 4px 16px var(--accentglow)'
       }}
       onMouseLeave={e => {
         const el = e.currentTarget as HTMLDivElement
-        el.style.borderColor = 'var(--border)'
-        el.style.boxShadow = 'none'
         el.style.transform = 'scale(1)'
+        el.style.borderColor = 'var(--glass-border)'
+        el.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)'
       }}
     >
-      <span className="text-sm font-bold tabular-nums" style={{ color: 'var(--text)' }}>
-        {sticker.number}
-      </span>
+      <span className="text-sm font-bold" style={{ color: 'var(--text)' }}>{sticker.number}</span>
       <button
         onClick={handleMark}
         disabled={loading}
@@ -58,7 +68,7 @@ export function StickerCard({ sticker, onMark }: Props) {
           const el = e.currentTarget as HTMLButtonElement
           el.style.background = 'var(--accent)'
           el.style.color = 'white'
-          el.style.boxShadow = '0 0 10px rgba(249,115,22,0.5)'
+          el.style.boxShadow = '0 0 12px var(--accentglow)'
         }}
         onMouseLeave={e => {
           const el = e.currentTarget as HTMLButtonElement

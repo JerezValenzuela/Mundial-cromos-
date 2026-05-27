@@ -1,66 +1,153 @@
 @import "tailwindcss";
 
+/* ─── DARK THEME ─── */
 :root,
 [data-theme="dark"] {
-  --bg:         #080f1a;
-  --bg2:        #0e1c2f;
-  --bg3:        #132338;
-  --bg4:        #1a2d47;
-  --border:     #1e3352;
-  --border2:    #2a4a72;
-  --text:       #e8f0f8;
-  --text2:      #7a9ec0;
-  --text3:      #3d6080;
-  --accent:     #f97316;
-  --accent2:    #fb923c;
-  --accentbg:   rgba(249,115,22,0.12);
-  --navy:       #0a1f3d;
-  --navy2:      #122e5a;
-  --green:      #22c55e;
-  --greenbg:    rgba(34,197,94,0.10);
-  --greenb:     rgba(34,197,94,0.35);
-  --gold:       #f59e0b;
-  --shadow:     0 4px 24px rgba(0,0,0,0.4);
-  --shadow-sm:  0 2px 8px rgba(0,0,0,0.3);
-  --glow:       0 0 20px rgba(249,115,22,0.15);
+  --bg-from:      #0a0f1e;
+  --bg-to:        #0d1829;
+  --glass:        rgba(255,255,255,0.04);
+  --glass-hover:  rgba(255,255,255,0.08);
+  --glass-border: rgba(255,255,255,0.10);
+  --glass-strong: rgba(255,255,255,0.12);
+  --blur:         blur(20px) saturate(180%);
+  --text:         #f0f4ff;
+  --text2:        rgba(200,215,255,0.65);
+  --text3:        rgba(150,175,220,0.45);
+  --accent:       #ff6b1a;
+  --accent2:      #ff8c42;
+  --accentglow:   rgba(255,107,26,0.35);
+  --green:        #34d399;
+  --greenglow:    rgba(52,211,153,0.30);
+  --greenglass:   rgba(52,211,153,0.08);
+  --greenborder:  rgba(52,211,153,0.25);
+  --gold:         #fbbf24;
+  --navy:         rgba(10,15,40,0.85);
+  --pill-bg:      rgba(255,255,255,0.06);
+  --pill-border:  rgba(255,255,255,0.12);
+  --input-bg:     rgba(255,255,255,0.05);
+  --input-border: rgba(255,255,255,0.12);
+  --shadow-lg:    0 25px 50px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05);
+  --shadow-md:    0 10px 30px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.04);
+  --shadow-sm:    0 4px 12px rgba(0,0,0,0.3);
 }
 
+/* ─── LIGHT THEME ─── */
 [data-theme="light"] {
-  --bg:         #f1f5fb;
-  --bg2:        #ffffff;
-  --bg3:        #e8eef7;
-  --bg4:        #dde6f3;
-  --border:     #c8d8ec;
-  --border2:    #a8c0dc;
-  --text:       #0a1628;
-  --text2:      #3a5878;
-  --text3:      #8aaac8;
-  --accent:     #ea6000;
-  --accent2:    #c85000;
-  --accentbg:   rgba(234,96,0,0.08);
-  --navy:       #1A3A6B;
-  --navy2:      #2a5099;
-  --green:      #16a34a;
-  --greenbg:    rgba(22,163,74,0.08);
-  --greenb:     rgba(22,163,74,0.30);
-  --gold:       #d97706;
-  --shadow:     0 4px 24px rgba(0,0,0,0.08);
-  --shadow-sm:  0 2px 8px rgba(0,0,0,0.06);
-  --glow:       0 0 20px rgba(234,96,0,0.10);
+  --bg-from:      #e8f0fe;
+  --bg-to:        #f0e8fe;
+  --glass:        rgba(255,255,255,0.55);
+  --glass-hover:  rgba(255,255,255,0.75);
+  --glass-border: rgba(255,255,255,0.80);
+  --glass-strong: rgba(255,255,255,0.90);
+  --blur:         blur(20px) saturate(180%);
+  --text:         #0f172a;
+  --text2:        rgba(30,50,100,0.65);
+  --text3:        rgba(30,50,100,0.40);
+  --accent:       #ea6000;
+  --accent2:      #c84e00;
+  --accentglow:   rgba(234,96,0,0.25);
+  --green:        #059669;
+  --greenglow:    rgba(5,150,105,0.20);
+  --greenglass:   rgba(5,150,105,0.08);
+  --greenborder:  rgba(5,150,105,0.25);
+  --gold:         #d97706;
+  --navy:         rgba(255,255,255,0.70);
+  --pill-bg:      rgba(255,255,255,0.60);
+  --pill-border:  rgba(255,255,255,0.90);
+  --input-bg:     rgba(255,255,255,0.60);
+  --input-border: rgba(200,220,255,0.60);
+  --shadow-lg:    0 25px 50px rgba(100,120,200,0.15), 0 0 0 1px rgba(255,255,255,0.8);
+  --shadow-md:    0 10px 30px rgba(100,120,200,0.12), 0 0 0 1px rgba(255,255,255,0.6);
+  --shadow-sm:    0 4px 12px rgba(100,120,200,0.10);
 }
 
+/* ─── BASE ─── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { width: 100%; }
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+}
 
 body {
-  background: var(--bg);
   color: var(--text);
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  transition: background 0.3s ease, color 0.3s ease;
+  font-family: -apple-system, 'SF Pro Display', 'Inter', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: color 0.4s ease;
+  overflow-x: hidden;
 }
+
+/* Animated gradient background */
+.page-bg {
+  background: linear-gradient(135deg, var(--bg-from) 0%, var(--bg-to) 100%);
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  transition: background 0.5s ease;
+}
+
+/* Ambient orbs */
+.page-bg::before {
+  content: '';
+  position: fixed;
+  top: -20%;
+  left: -10%;
+  width: 60%;
+  height: 60%;
+  background: radial-gradient(circle, var(--accentglow) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  animation: float1 12s ease-in-out infinite;
+}
+.page-bg::after {
+  content: '';
+  position: fixed;
+  bottom: -20%;
+  right: -10%;
+  width: 50%;
+  height: 50%;
+  background: radial-gradient(circle, var(--greenglow) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  animation: float2 15s ease-in-out infinite;
+}
+
+@keyframes float1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%       { transform: translate(3%, 4%) scale(1.05); }
+}
+@keyframes float2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%       { transform: translate(-3%, -4%) scale(1.08); }
+}
+
+/* Glass card */
+.glass {
+  background: var(--glass);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-md);
+}
+.glass-strong {
+  background: var(--glass-strong);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Input base */
+input {
+  font-family: inherit;
+  outline: none;
+}
+input::placeholder { color: var(--text3); }
 
 ::selection { background: var(--accent); color: white; }
 
-input { font-family: inherit; }
-input::placeholder { color: var(--text3); }
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 3px; }

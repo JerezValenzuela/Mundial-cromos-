@@ -1,64 +1,69 @@
 'use client'
 
-import { useTheme } from '@/context/ThemeContext'
+import { useTheme } from '@/contexts/ThemeContext'
 
 type Props = { totalMissing: number; loading: boolean }
-
 const TOTAL = 682
 
 export function Header({ totalMissing, loading }: Props) {
-  const { theme, toggle } = useTheme()
+  const { theme, toggleTheme } = useTheme()
   const obtained = TOTAL - totalMissing
-  const pct = (obtained / TOTAL) * 100
+  const pct = Math.round((obtained / TOTAL) * 100)
 
   return (
-    <header className="sticky top-0 z-50 border-b"
-      style={{
-        background: 'linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%)',
-        borderColor: 'rgba(255,255,255,0.08)',
-        boxShadow: '0 4px 30px rgba(0,0,0,0.35)',
-        backdropFilter: 'blur(12px)',
-      }}>
-      <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
-
+    <header className="sticky top-0 z-50 flex justify-center px-4 py-3">
+      <div
+        className="glass w-full max-w-4xl rounded-2xl px-5 py-3 flex items-center justify-between gap-4"
+        style={{ boxShadow: '0 8px 32px rgba(0,0,0,0.3), 0 0 0 1px var(--glass-border)' }}
+      >
         {/* Logo */}
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl flex items-center justify-center text-lg shadow-lg"
-            style={{ background: 'linear-gradient(135deg, var(--accent) 0%, var(--gold) 100%)' }}>
+          <div
+            className="w-9 h-9 rounded-xl flex items-center justify-center text-lg shadow-lg shrink-0"
+            style={{ background: 'linear-gradient(135deg, var(--accent), var(--gold))' }}
+          >
             🏆
           </div>
-          <div>
-            <h1 className="font-bold text-sm text-white tracking-tight">Panini FIFA 2026</h1>
-            <p className="text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>Álbum colaborativo</p>
+          <div className="hidden sm:block">
+            <p className="font-bold text-sm leading-tight" style={{ color: 'var(--text)' }}>Panini FIFA 2026</p>
+            <p className="text-xs" style={{ color: 'var(--text3)' }}>Álbum colaborativo</p>
           </div>
         </div>
 
-        {/* Progress + toggle */}
+        {/* Progress pill */}
+        {!loading && (
+          <div className="flex-1 max-w-xs hidden sm:block">
+            <div className="flex justify-between text-xs mb-1" style={{ color: 'var(--text2)' }}>
+              <span>{obtained} conseguidos</span>
+              <span style={{ color: 'var(--accent)', fontWeight: 700 }}>{totalMissing} faltan</span>
+            </div>
+            <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.1)' }}>
+              <div
+                className="h-full rounded-full transition-all duration-1000"
+                style={{
+                  width: `${pct}%`,
+                  background: 'linear-gradient(90deg, var(--accent), var(--gold))',
+                  boxShadow: '0 0 10px var(--accentglow)',
+                }}
+              />
+            </div>
+          </div>
+        )}
+
+        {/* Right side */}
         <div className="flex items-center gap-3">
           {!loading && (
-            <div className="hidden sm:flex flex-col items-end gap-1">
-              <div className="flex items-baseline gap-1.5">
-                <span className="text-2xl font-black leading-none" style={{ color: 'var(--accent2)' }}>
-                  {totalMissing}
-                </span>
-                <span className="text-xs font-medium text-white opacity-60">faltan</span>
-              </div>
-              <div className="w-32 h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.12)' }}>
-                <div className="h-full rounded-full transition-all duration-1000"
-                  style={{
-                    width: `${pct}%`,
-                    background: 'linear-gradient(90deg, var(--green) 0%, #4ade80 100%)',
-                    boxShadow: '0 0 8px rgba(34,197,94,0.6)',
-                  }} />
-              </div>
-              <p className="text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>{obtained} / {TOTAL}</p>
+            <div className="text-right">
+              <p className="font-black text-xl leading-none" style={{ color: 'var(--accent)' }}>{totalMissing}</p>
+              <p className="text-xs" style={{ color: 'var(--text3)' }}>/ {TOTAL}</p>
             </div>
           )}
-
-          <button onClick={toggle}
-            className="w-9 h-9 rounded-full flex items-center justify-center text-base transition-all duration-200 hover:scale-110 hover:opacity-90"
-            style={{ background: 'rgba(255,255,255,0.10)', border: '1px solid rgba(255,255,255,0.15)' }}
-            title={theme === 'dark' ? 'Modo claro' : 'Modo oscuro'}>
+          <button
+            onClick={toggleTheme}
+            className="w-9 h-9 rounded-xl flex items-center justify-center text-base transition-all duration-200 hover:scale-110"
+            style={{ background: 'var(--pill-bg)', border: '1px solid var(--pill-border)' }}
+            title={theme === 'dark' ? 'Modo claro' : 'Modo oscuro'}
+          >
             {theme === 'dark' ? '☀️' : '🌙'}
           </button>
         </div>
