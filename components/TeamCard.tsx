@@ -3,11 +3,7 @@
 import Link from 'next/link'
 import { TEAM_NAMES, TEAM_FLAGS } from '@/lib/stickerData'
 
-type Props = {
-  teamCode: string
-  missingCount: number
-  totalCount: number
-}
+type Props = { teamCode: string; missingCount: number; totalCount: number }
 
 export function TeamCard({ teamCode, missingCount, totalCount }: Props) {
   const name = TEAM_NAMES[teamCode] ?? teamCode
@@ -19,45 +15,55 @@ export function TeamCard({ teamCode, missingCount, totalCount }: Props) {
   return (
     <Link href={`/team/${teamCode}`}>
       <div
-        className="flex flex-col items-center gap-2 rounded-2xl p-3 border transition-all duration-200 cursor-pointer hover:scale-[1.03] hover:shadow-lg"
+        className="group flex flex-col items-center gap-2 rounded-2xl p-3 border transition-all duration-250 cursor-pointer"
         style={{
-          background: done ? 'var(--green-bg)' : 'var(--bg2)',
-          borderColor: done ? 'var(--green-b)' : 'var(--border)',
+          background: done
+            ? 'linear-gradient(135deg, rgba(34,197,94,0.12), rgba(34,197,94,0.06))'
+            : 'var(--bg2)',
+          borderColor: done ? 'var(--greenb)' : 'var(--border)',
+          boxShadow: 'var(--shadow-sm)',
         }}
         onMouseEnter={e => {
-          if (!done) (e.currentTarget as HTMLDivElement).style.borderColor = 'var(--accent)'
+          const el = e.currentTarget as HTMLDivElement
+          el.style.borderColor = done ? 'var(--green)' : 'var(--accent)'
+          el.style.transform = 'translateY(-2px) scale(1.02)'
+          el.style.boxShadow = done ? '0 8px 24px rgba(34,197,94,0.2)' : '0 8px 24px rgba(249,115,22,0.2)'
         }}
         onMouseLeave={e => {
-          if (!done) (e.currentTarget as HTMLDivElement).style.borderColor = 'var(--border)'
+          const el = e.currentTarget as HTMLDivElement
+          el.style.borderColor = done ? 'var(--greenb)' : 'var(--border)'
+          el.style.transform = 'translateY(0) scale(1)'
+          el.style.boxShadow = 'var(--shadow-sm)'
         }}
       >
-        <span className="text-3xl leading-none">{flag}</span>
-        <span
-          className="text-xs font-semibold text-center leading-tight"
-          style={{ color: done ? 'var(--green)' : 'var(--text)', textDecoration: done ? 'line-through' : 'none' }}
-        >
+        <span className="text-3xl leading-none drop-shadow">{flag}</span>
+
+        <span className="text-xs font-semibold text-center leading-tight w-full truncate"
+          style={{
+            color: done ? 'var(--green)' : 'var(--text)',
+            textDecoration: done ? 'line-through' : 'none',
+            opacity: done ? 0.7 : 1,
+          }}>
           {name}
         </span>
 
-        <div className="w-full">
-          <div className="w-full h-1 rounded-full overflow-hidden" style={{ background: 'var(--border)' }}>
-            <div
-              className="h-full rounded-full transition-all duration-500"
-              style={{
-                width: `${pct}%`,
-                background: done ? 'var(--green)' : 'var(--accent)',
-              }}
-            />
-          </div>
+        {/* Mini progress bar */}
+        <div className="w-full h-1 rounded-full overflow-hidden" style={{ background: 'var(--border)' }}>
+          <div className="h-full rounded-full transition-all duration-500"
+            style={{
+              width: `${pct}%`,
+              background: done
+                ? 'var(--green)'
+                : 'linear-gradient(90deg, var(--accent), var(--accent2))',
+            }} />
         </div>
 
-        <span
-          className="text-xs font-bold px-2 py-0.5 rounded-full"
+        <span className="text-xs font-bold px-2.5 py-0.5 rounded-full"
           style={{
-            background: done ? 'var(--green)' : 'var(--accent)',
+            background: done ? 'var(--green)' : 'linear-gradient(135deg, var(--accent), var(--accent2))',
             color: 'white',
-          }}
-        >
+            boxShadow: done ? '0 2px 8px rgba(34,197,94,0.35)' : '0 2px 8px rgba(249,115,22,0.35)',
+          }}>
           {done ? '✓ Listo' : `${missingCount} faltan`}
         </span>
       </div>

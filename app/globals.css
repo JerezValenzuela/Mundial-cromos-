@@ -2,50 +2,64 @@
 
 :root,
 [data-theme="dark"] {
-  --bg:        #0d1b2a;
-  --bg2:       #142232;
-  --bg3:       #1c2f44;
-  --border:    #2a4060;
-  --border2:   #3a5580;
-  --text:      #f0f4f8;
-  --text2:     #8aaac8;
-  --text3:     #5580a0;
-  --accent:    #E8600A;
-  --accent2:   #ff8040;
-  --navy:      #1A3A6B;
-  --navy2:     #2a5099;
-  --green:     #22c55e;
-  --green-bg:  #052e16;
-  --green-b:   #166534;
-  --card-hover:#243850;
+  --bg:         #080f1a;
+  --bg2:        #0e1c2f;
+  --bg3:        #132338;
+  --bg4:        #1a2d47;
+  --border:     #1e3352;
+  --border2:    #2a4a72;
+  --text:       #e8f0f8;
+  --text2:      #7a9ec0;
+  --text3:      #3d6080;
+  --accent:     #f97316;
+  --accent2:    #fb923c;
+  --accentbg:   rgba(249,115,22,0.12);
+  --navy:       #0a1f3d;
+  --navy2:      #122e5a;
+  --green:      #22c55e;
+  --greenbg:    rgba(34,197,94,0.10);
+  --greenb:     rgba(34,197,94,0.35);
+  --gold:       #f59e0b;
+  --shadow:     0 4px 24px rgba(0,0,0,0.4);
+  --shadow-sm:  0 2px 8px rgba(0,0,0,0.3);
+  --glow:       0 0 20px rgba(249,115,22,0.15);
 }
 
 [data-theme="light"] {
-  --bg:        #f0f4f8;
-  --bg2:       #ffffff;
-  --bg3:       #e2eaf2;
-  --border:    #c8d8e8;
-  --border2:   #a0b8d0;
-  --text:      #0d1b2a;
-  --text2:     #3a5570;
-  --text3:     #7a9ab8;
-  --accent:    #E8600A;
-  --accent2:   #c84e00;
-  --navy:      #1A3A6B;
-  --navy2:     #2a5099;
-  --green:     #16a34a;
-  --green-bg:  #dcfce7;
-  --green-b:   #86efac;
-  --card-hover:#dce8f4;
+  --bg:         #f1f5fb;
+  --bg2:        #ffffff;
+  --bg3:        #e8eef7;
+  --bg4:        #dde6f3;
+  --border:     #c8d8ec;
+  --border2:    #a8c0dc;
+  --text:       #0a1628;
+  --text2:      #3a5878;
+  --text3:      #8aaac8;
+  --accent:     #ea6000;
+  --accent2:    #c85000;
+  --accentbg:   rgba(234,96,0,0.08);
+  --navy:       #1A3A6B;
+  --navy2:      #2a5099;
+  --green:      #16a34a;
+  --greenbg:    rgba(22,163,74,0.08);
+  --greenb:     rgba(22,163,74,0.30);
+  --gold:       #d97706;
+  --shadow:     0 4px 24px rgba(0,0,0,0.08);
+  --shadow-sm:  0 2px 8px rgba(0,0,0,0.06);
+  --glow:       0 0 20px rgba(234,96,0,0.10);
 }
 
-* { box-sizing: border-box; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: 'Inter', Arial, Helvetica, sans-serif;
-  transition: background 0.3s, color 0.3s;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  transition: background 0.3s ease, color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
 }
 
+::selection { background: var(--accent); color: white; }
+
+input { font-family: inherit; }
 input::placeholder { color: var(--text3); }
