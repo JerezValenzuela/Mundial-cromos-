@@ -114,6 +114,18 @@ export default function HomePage() {
                         ? '¡Ya lo tienes marcado!'
                         : 'Te falta — ¡consíguelo!'}
                     </p>
+                    {/* Team remaining count */}
+                    {(() => {
+                      const team = stickerResult.found ? stickerResult.sticker.team : stickerResult.team
+                      const teamStickers = missingByTeam[team] ?? []
+                      const remaining = teamStickers.filter(s => !s.obtained).length
+                      if (teamStickers.length === 0) return null
+                      return (
+                        <p className="text-xs opacity-70 mt-0.5">
+                          {TEAM_NAMES[team] ?? team}: {remaining === 0 ? '¡equipo completo! ✓' : `${remaining} cromo${remaining !== 1 ? 's' : ''} más por conseguir`}
+                        </p>
+                      )
+                    })()}
                   </div>
                 </div>
 
