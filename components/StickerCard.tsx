@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { Sticker } from '@/lib/supabase'
 
 type Props = {
@@ -8,11 +9,27 @@ type Props = {
 }
 
 export function StickerCard({ sticker, onMark }: Props) {
+  const [loading, setLoading] = useState(false)
+
+  const handleMark = async () => {
+    setLoading(true)
+    await onMark(sticker.id)
+    setLoading(false)
+  }
+
   if (sticker.obtained) {
     return (
-      <div className="flex flex-col items-center justify-center bg-[#0a2a1a] border-2 border-green-600 rounded-xl p-4 gap-2">
-        <span className="text-2xl font-bold text-green-400 line-through opacity-60">{sticker.number}</span>
-        <div className="w-8 h-8 rounded-full bg-green-700 flex items-center justify-center text-white text-lg font-bold">
+      <div
+        className="flex flex-col items-center justify-center rounded-2xl p-3 gap-1 border-2"
+        style={{ background: 'var(--green-bg)', borderColor: 'var(--green-b)' }}
+      >
+        <span className="text-lg font-bold line-through" style={{ color: 'var(--green)' }}>
+          {sticker.number}
+        </span>
+        <div
+          className="w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold text-white"
+          style={{ background: 'var(--green)' }}
+        >
           ✓
         </div>
       </div>
@@ -20,15 +37,37 @@ export function StickerCard({ sticker, onMark }: Props) {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center bg-[#0f1e3a] border border-[#1e3560] rounded-xl p-4 gap-2 hover:border-[#E8600A] transition-all duration-200">
-      <span className="text-2xl font-bold text-white">{sticker.number}</span>
+    <div
+      className="flex flex-col items-center justify-center rounded-2xl p-3 gap-1 border transition-all duration-200 hover:shadow-md"
+      style={{ background: 'var(--bg2)', borderColor: 'var(--border)' }}
+      onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.borderColor = 'var(--accent)'}
+      onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.borderColor = 'var(--border)'}
+    >
+      <span className="text-lg font-bold" style={{ color: 'var(--text)' }}>
+        {sticker.number}
+      </span>
       <button
-        onClick={() => onMark(sticker.id)}
-        className="w-8 h-8 rounded-full bg-[#1e3560] border-2 border-[#E8600A] flex items-center justify-center text-[#E8600A] hover:bg-[#E8600A] hover:text-white transition-all duration-200 text-lg font-bold"
+        onClick={handleMark}
+        disabled={loading}
+        className="w-7 h-7 rounded-full border-2 flex items-center justify-center text-sm font-bold transition-all duration-200 hover:scale-110 disabled:opacity-50"
+        style={{
+          borderColor: 'var(--accent)',
+          color: 'var(--accent)',
+          background: 'transparent',
+        }}
+        onMouseEnter={e => {
+          const el = e.currentTarget
+          el.style.background = 'var(--accent)'
+          el.style.color = 'white'
+        }}
+        onMouseLeave={e => {
+          const el = e.currentTarget
+          el.style.background = 'transparent'
+          el.style.color = 'var(--accent)'
+        }}
         title="Marcar como obtenido"
-        aria-label={`Marcar cromo ${sticker.number} como obtenido`}
       >
-        ✓
+        {loading ? '…' : '✓'}
       </button>
     </div>
   )
