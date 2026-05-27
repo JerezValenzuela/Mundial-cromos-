@@ -57,10 +57,10 @@ export default function HomePage() {
     : true // needs to be obtained
 
   return (
-    <div className="min-h-screen transition-colors" style={{ background: 'var(--bg)' }}>
+    <div className="w-full min-h-screen transition-colors" style={{ background: 'var(--bg)' }}>
       <Header totalMissing={totalMissing} loading={loading} />
 
-      <main className="max-w-5xl mx-auto px-4 py-6 space-y-5">
+      <main className="w-full max-w-5xl mx-auto px-4 py-6 space-y-5">
 
         {/* Search card */}
         <div className="max-w-2xl mx-auto rounded-2xl border p-5 space-y-5 transition-colors"
